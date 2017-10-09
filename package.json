@@ -1,21 +1,22 @@
 {
   "name": "sedra-parse",
-  "version": "1.0.0",
-  "description": "Parse Sedra 3 text database records and return their JavaScript representation",
+  "version": "1.0.1",
+  "description": "Parse Sedra 3 text database records and build JavaScript representation",
   "main": "build/sedra-parse.js",
-  "main݂Min": "build/sedra-parse.min.js",
+  "mainMin": "build/sedra-parse.min.js",
   "module": "build/sedra-parse.esm.js",
   "scripts": {
     "pretest": "rollup -c",
     "test": "mocha --reporter test/istanbul.reporter.js --recursive",
-    "prebuild": "npm run doc && npm test && npm run lint",
+    "prebuild": "npm test && npm run lint",
     "build": "npm run bundle",
+    "postbuild": "npm run doc",
     "bundle": "rollup -c --environment BUILD:production",
     "build:dev": "rollup -c --environment BUILD:dev",
     "lint": "eslint src test",
     "doc": "jsdoc2md -t doc/readme.hbs src/*.js > README.md",
     "coverage": "cat ./coverage/lcov.info | coveralls && rm -rf ./coverage",
-    "prepublishOnly": "npm run build"
+    "prepare": "npm run build"
   },
   "eslintConfig": {
     "extends": "airbnb-base",
@@ -60,13 +61,9 @@
   },
   "homepage": "https://github.com/peshitta/sedra-parse#readme",
   "dependencies": {
-    "sedra-cal": "^1.0.8"
+    "sedra-cal": "^1.0.9"
   },
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-plugin-external-helpers": "^6.22.0",
-    "babel-preset-env": "^1.6.0",
-    "babelrc-rollup": "^3.0.0",
     "coveralls": "^3.0.0",
     "eslint": "^4.8.0",
     "eslint-config-airbnb-base": "^12.0.2",
@@ -75,7 +72,7 @@
     "jsdoc-to-markdown": "^3.0.0",
     "mocha": "^4.0.1",
     "rollup": "^0.50.0",
-    "rollup-plugin-babel": "^3.0.2",
+    "rollup-plugin-buble": "^0.16.0",
     "rollup-plugin-istanbul": "^1.1.0",
     "rollup-plugin-uglify": "^2.0.1"
   }

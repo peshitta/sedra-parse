@@ -25,7 +25,7 @@ Following bundles are available:
 libraries and applications
 
 The package could also be downloaded directly from:
-[https://registry.npmjs.org/sedra-parse/-/sedra-parse-1.0.0.tgz](https://registry.npmjs.org/sedra-parse/-/sedra-parse-1.0.0.tgz)
+[https://registry.npmjs.org/sedra-parse/-/sedra-parse-1.0.1.tgz](https://registry.npmjs.org/sedra-parse/-/sedra-parse-1.0.1.tgz)
 
 ## More information
 
@@ -60,160 +60,160 @@ npm run build
 
 ## API Reference
 
-* [sedra](#module_sedra)
+* [sedraParse](#module_sedraParse)
     * _static_
-        * [.getRoots(content)](#module_sedra.getRoots) ⇒ <code>string</code>
-        * [.getLexemes(content)](#module_sedra.getLexemes) ⇒ <code>string</code>
-        * [.getWords(content)](#module_sedra.getWords) ⇒ <code>string</code>
-        * [.getEnglish(content)](#module_sedra.getEnglish) ⇒ <code>string</code>
-        * [.getEtymology(content)](#module_sedra.getEtymology) ⇒ <code>string</code>
-        * [.getUbs(content)](#module_sedra.getUbs) ⇒ <code>string</code>
+        * [.getRoots(content)](#module_sedraParse.getRoots) ⇒ <code>string</code>
+        * [.getLexemes(content)](#module_sedraParse.getLexemes) ⇒ <code>string</code>
+        * [.getWords(content)](#module_sedraParse.getWords) ⇒ <code>string</code>
+        * [.getEnglish(content)](#module_sedraParse.getEnglish) ⇒ <code>string</code>
+        * [.getEtymology(content)](#module_sedraParse.getEtymology) ⇒ <code>string</code>
+        * [.getUbs(content)](#module_sedraParse.getUbs) ⇒ <code>string</code>
     * _inner_
-        * [~rootRegex](#module_sedra..rootRegex) : <code>RegExp</code>
-        * [~lexemeRegex](#module_sedra..lexemeRegex) : <code>RegExp</code>
-        * [~wordRegex](#module_sedra..wordRegex) : <code>RegExp</code>
-        * [~parseWords](#module_sedra..parseWords) ⇒ <code>string</code>
-        * [~englishRegex](#module_sedra..englishRegex) : <code>RegExp</code>
-        * [~etymologyRegex](#module_sedra..etymologyRegex) : <code>RegExp</code>
-        * [~parseEtymology](#module_sedra..parseEtymology) ⇒ <code>string</code>
-        * [~ubsRegex](#module_sedra..ubsRegex) : <code>RegExp</code>
-        * [~buildUbs](#module_sedra..buildUbs) ⇒ <code>Object</code>
-        * [~parseUbs](#module_sedra..parseUbs) ⇒ <code>Object</code>
+        * [~rootRegex](#module_sedraParse..rootRegex) : <code>RegExp</code>
+        * [~lexemeRegex](#module_sedraParse..lexemeRegex) : <code>RegExp</code>
+        * [~wordRegex](#module_sedraParse..wordRegex) : <code>RegExp</code>
+        * [~parseWords](#module_sedraParse..parseWords) ⇒ <code>string</code>
+        * [~englishRegex](#module_sedraParse..englishRegex) : <code>RegExp</code>
+        * [~etymologyRegex](#module_sedraParse..etymologyRegex) : <code>RegExp</code>
+        * [~parseEtymology](#module_sedraParse..parseEtymology) ⇒ <code>string</code>
+        * [~ubsRegex](#module_sedraParse..ubsRegex) : <code>RegExp</code>
+        * [~buildUbs](#module_sedraParse..buildUbs) ⇒ <code>Object</code>
+        * [~parseUbs](#module_sedraParse..parseUbs) ⇒ <code>Object</code>
 
-<a name="module_sedra.getRoots"></a>
+<a name="module_sedraParse.getRoots"></a>
 
-### sedra.getRoots(content) ⇒ <code>string</code>
+### sedraParse.getRoots(content) ⇒ <code>string</code>
 Build roots javascript from root records e.g. 0:2,"AB","ab           |A",0
 
-**Kind**: static method of [<code>sedra</code>](#module_sedra)  
+**Kind**: static method of [<code>sedraParse</code>](#module_sedraParse)  
 **Returns**: <code>string</code> - JavaScript root representation  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | content | <code>string</code> | Sedra root records |
 
-<a name="module_sedra.getLexemes"></a>
+<a name="module_sedraParse.getLexemes"></a>
 
-### sedra.getLexemes(content) ⇒ <code>string</code>
+### sedraParse.getLexemes(content) ⇒ <code>string</code>
 Build lexemes javascript from lexeme records e.g. 1:2,0:2,"ABA",41960448,16
 
-**Kind**: static method of [<code>sedra</code>](#module_sedra)  
+**Kind**: static method of [<code>sedraParse</code>](#module_sedraParse)  
 **Returns**: <code>string</code> - Lexeme javascript records  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | content | <code>string</code> | Lexeme text records |
 
-<a name="module_sedra.getWords"></a>
+<a name="module_sedraParse.getWords"></a>
 
-### sedra.getWords(content) ⇒ <code>string</code>
+### sedraParse.getWords(content) ⇒ <code>string</code>
 Build word JavaScript from word records
 e.g. 2:31070,1:2055,"DMSBRNOTA","D'aMSaB'RoNuOT,oA",6915072,128
 
-**Kind**: static method of [<code>sedra</code>](#module_sedra)  
+**Kind**: static method of [<code>sedraParse</code>](#module_sedraParse)  
 **Returns**: <code>string</code> - Word JavaScript records  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | content | <code>string</code> | Word text records |
 
-<a name="module_sedra.getEnglish"></a>
+<a name="module_sedraParse.getEnglish"></a>
 
-### sedra.getEnglish(content) ⇒ <code>string</code>
+### sedraParse.getEnglish(content) ⇒ <code>string</code>
 Build english javascript from english records
 e.g. 3:165,1:97,"cause","without","","",0,0
 
-**Kind**: static method of [<code>sedra</code>](#module_sedra)  
+**Kind**: static method of [<code>sedraParse</code>](#module_sedraParse)  
 **Returns**: <code>string</code> - English JavaScript content  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | content | <code>string</code> | English text content |
 
-<a name="module_sedra.getEtymology"></a>
+<a name="module_sedraParse.getEtymology"></a>
 
-### sedra.getEtymology(content) ⇒ <code>string</code>
+### sedraParse.getEtymology(content) ⇒ <code>string</code>
 Build etymology JavaScript from etymology records e.g. 4:10,1:75,"eu\310",5
 
-**Kind**: static method of [<code>sedra</code>](#module_sedra)  
+**Kind**: static method of [<code>sedraParse</code>](#module_sedraParse)  
 **Returns**: <code>string</code> - Etymology JavaScript records  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | content | <code>string</code> | Etymology text file records |
 
-<a name="module_sedra.getUbs"></a>
+<a name="module_sedraParse.getUbs"></a>
 
-### sedra.getUbs(content) ⇒ <code>string</code>
+### sedraParse.getUbs(content) ⇒ <code>string</code>
 Build Ubs JavaScript from ubs records e.g. 0:8,520100108,33554599,36
 
-**Kind**: static method of [<code>sedra</code>](#module_sedra)  
+**Kind**: static method of [<code>sedraParse</code>](#module_sedraParse)  
 **Returns**: <code>string</code> - Ubs JavaScript  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | content | <code>string</code> | Ubs text database records |
 
-<a name="module_sedra..rootRegex"></a>
+<a name="module_sedraParse..rootRegex"></a>
 
-### sedra~rootRegex : <code>RegExp</code>
+### sedraParse~rootRegex : <code>RegExp</code>
 Regex to remove ids from root rows and extract relevant information
 
-**Kind**: inner constant of [<code>sedra</code>](#module_sedra)  
-<a name="module_sedra..lexemeRegex"></a>
+**Kind**: inner constant of [<code>sedraParse</code>](#module_sedraParse)  
+<a name="module_sedraParse..lexemeRegex"></a>
 
-### sedra~lexemeRegex : <code>RegExp</code>
+### sedraParse~lexemeRegex : <code>RegExp</code>
 Regex to remove ids from lexeme records and extract relevant information
 
-**Kind**: inner constant of [<code>sedra</code>](#module_sedra)  
-<a name="module_sedra..wordRegex"></a>
+**Kind**: inner constant of [<code>sedraParse</code>](#module_sedraParse)  
+<a name="module_sedraParse..wordRegex"></a>
 
-### sedra~wordRegex : <code>RegExp</code>
+### sedraParse~wordRegex : <code>RegExp</code>
 Regex to remove ids from word records and extract wanted information
 
-**Kind**: inner constant of [<code>sedra</code>](#module_sedra)  
-<a name="module_sedra..parseWords"></a>
+**Kind**: inner constant of [<code>sedraParse</code>](#module_sedraParse)  
+<a name="module_sedraParse..parseWords"></a>
 
-### sedra~parseWords ⇒ <code>string</code>
+### sedraParse~parseWords ⇒ <code>string</code>
 Remove id from word file as id will be given by the position in the array.
 Word file has 432 gaps with largest ones being 45 (see sedrajs unit tests).
 
-**Kind**: inner constant of [<code>sedra</code>](#module_sedra)  
+**Kind**: inner constant of [<code>sedraParse</code>](#module_sedraParse)  
 **Returns**: <code>string</code> - Parsed word records  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | content | <code>string</code> | Input word records |
 
-<a name="module_sedra..englishRegex"></a>
+<a name="module_sedraParse..englishRegex"></a>
 
-### sedra~englishRegex : <code>RegExp</code>
+### sedraParse~englishRegex : <code>RegExp</code>
 Regex to remove ids from english records and extract relevant information
 only
 
-**Kind**: inner constant of [<code>sedra</code>](#module_sedra)  
-<a name="module_sedra..etymologyRegex"></a>
+**Kind**: inner constant of [<code>sedraParse</code>](#module_sedraParse)  
+<a name="module_sedraParse..etymologyRegex"></a>
 
-### sedra~etymologyRegex : <code>RegExp</code>
+### sedraParse~etymologyRegex : <code>RegExp</code>
 Regex to remove ids from etymology records and extract useful info only
 
-**Kind**: inner constant of [<code>sedra</code>](#module_sedra)  
-<a name="module_sedra..parseEtymology"></a>
+**Kind**: inner constant of [<code>sedraParse</code>](#module_sedraParse)  
+<a name="module_sedraParse..parseEtymology"></a>
 
-### sedra~parseEtymology ⇒ <code>string</code>
+### sedraParse~parseEtymology ⇒ <code>string</code>
 Remove id from etymology records as id will be given by the array position.
 Etymology file has 3 gaps but difference is 1 only (see sedrajs unit tests).
 
-**Kind**: inner constant of [<code>sedra</code>](#module_sedra)  
+**Kind**: inner constant of [<code>sedraParse</code>](#module_sedraParse)  
 **Returns**: <code>string</code> - Parsed etymology content  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | content | <code>string</code> | Input etymology text records |
 
-<a name="module_sedra..ubsRegex"></a>
+<a name="module_sedraParse..ubsRegex"></a>
 
-### sedra~ubsRegex : <code>RegExp</code>
+### sedraParse~ubsRegex : <code>RegExp</code>
 Regex to remove ids from Ubs records and extract parsed information
 book - Left 2 digits represent the book (52=Matt, 53=Mark, 54=Luke, etc.)
 chapter - Next 2 digits = chapter
@@ -222,26 +222,26 @@ index - Next 2 digits = word
 wordId - the two most significant bits are always 02 which represents the
    database file number
 
-**Kind**: inner constant of [<code>sedra</code>](#module_sedra)  
-<a name="module_sedra..buildUbs"></a>
+**Kind**: inner constant of [<code>sedraParse</code>](#module_sedraParse)  
+<a name="module_sedraParse..buildUbs"></a>
 
-### sedra~buildUbs ⇒ <code>Object</code>
+### sedraParse~buildUbs ⇒ <code>Object</code>
 Build parsed Usb object from the ubsRegex match
 
-**Kind**: inner constant of [<code>sedra</code>](#module_sedra)  
+**Kind**: inner constant of [<code>sedraParse</code>](#module_sedraParse)  
 **Returns**: <code>Object</code> - object created from match result  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | match | <code>Object</code> | regex match result |
 
-<a name="module_sedra..parseUbs"></a>
+<a name="module_sedraParse..parseUbs"></a>
 
-### sedra~parseUbs ⇒ <code>Object</code>
+### sedraParse~parseUbs ⇒ <code>Object</code>
 Remove id from Ubs records as it is not being used and it
 is also messed up - it overflows and becomes negative a number of times.
 
-**Kind**: inner constant of [<code>sedra</code>](#module_sedra)  
+**Kind**: inner constant of [<code>sedraParse</code>](#module_sedraParse)  
 **Returns**: <code>Object</code> - Parsed JavaScript Ubs records  
 
 | Param | Type | Description |
