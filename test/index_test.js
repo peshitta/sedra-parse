@@ -88,7 +88,7 @@ describe('Word', () => {
       'Object.freeze([,' +
       'w(2,"l)bwh","la)b,wuh",6883480,128),' +
       'w(2,"l)bwhy","la)b,wuh_y",6883476,128),' +
-      'w(2,"l)bwhyn","la)b,wuheyn",6883544,128),' +
+      'w(2,"l)bwhyn","la)b,wuhyen",6883544,128),' +
       ',,,' +
       'w(2,"l)bwk","la)b,wuk,",6883492,128),' +
       'w(2,"l)bwkwn","la)b,wuk,wun",6883556,128),' +
