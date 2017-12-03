@@ -82,10 +82,12 @@ describe('Word', () => {
         '2:13,1:4,"ABHON","AeB\'HuON",6881492,128\r\n' +
         '2:14,1:4,"OABC;","OeAB\'eC,;",6882984,128\r\n' +
         '2:15,1:4,"ABA","AeB\'oA",6881280,320\r\n' +
-        '2:20,1:5,"ABD","AoB,eD,",109772800,128\r\n'
+        '2:20,1:5,"ABD","AoB,eD,",109772800,128\r\n' +
+        '2:21,1:1742,"MYL","MeYuL",0,192\r\n' +
+        '2:22,1:2854,"DXSR;A-DI;L;IOS","D\'XeSaRi;aA-D,I,i;Li;I\'oOS",1024,128\r\n'
     );
     const expected =
-      'Object.freeze([,' +
+      'Object.freeze((function(){var r=[,' +
       'w(2,"l)bwh","la)b,wuh",6883480,128),' +
       'w(2,"l)bwhy","la)b,wuh_y",6883476,128),' +
       'w(2,"l)bwhyn","la)b,wuhyen",6883544,128),' +
@@ -100,8 +102,10 @@ describe('Word', () => {
       'w(4,"w)bky","we)b\'ek,y",6882984,128),' +
       'w(4,")b)",")eb\'o)",6881280,320),' +
       ',,,,' +
-      'w(5,")bd",")ob,ed,",109772800,128)' +
-      ']);';
+      'w(5,")bd",")ob,ed,",109772800,128),' +
+      'w(1742,"mTl","meTul",0,192),' +
+      'w(2854,"dqsry)-dpylypws","d\'qesariya)-d,p,yilyip\'wOs",1024,128)];' +
+      'r.noYw=["meTul","d\'qesariya)-d,p,yilyip\'wOs"];return r;}()));';
     strictEqual(js, expected, 'parsed words');
   });
 });

@@ -49,6 +49,12 @@ const getLexemes = content => {
  */
 const wordRegex = /2:(\d+),(?:1:(\d+)|(NULL)),("[A-Z;/a' -]+"),(".+"),(.+)\r\n/gm;
 /**
+ * Regex to find vocalized words with i/u vowels without supporting y/w
+ * @const
+ * @type { RegExp }
+ */
+const noYwRegex = /.*([i]+[^;]+)|([u]+[^O]+)|([i]+[;]+[aoeiu]+)|([u]+[O]+[aoeiu]+).*/;
+/**
  * Remove id from word file as id will be given by the position in the array.
  * Word file has 432 gaps with largest ones being 45 (see sedrajs unit tests).
  * @const
@@ -57,7 +63,8 @@ const wordRegex = /2:(\d+),(?:1:(\d+)|(NULL)),("[A-Z;/a' -]+"),(".+"),(.+)\r\n/g
  */
 const parseWords = content => {
   let pid = 0;
-  return content.replace(
+  const noYw = [];
+  const result = content.replace(
     wordRegex,
     (match, id, lexemeId, noLexemeId, word, vocalised, line) => {
       const cid = parseInt(id, 10);
@@ -66,11 +73,17 @@ const parseWords = content => {
         sb += ',';
         ++pid;
       }
+      if (noYwRegex.test(vocalised)) {
+        noYw.push(toCal(vocalised));
+      }
       return `${sb}w(${noLexemeId ? 'null' : lexemeId},${toCal(
         word.replace(' "', '"')
       )},${toCal(vocalised)},${line})`;
     }
   );
+  return `(function(){var r=[${result}];r.noYw=${JSON.stringify(
+    noYw
+  ).replace(/\\"/g, '')};return r;}())`;
 };
 /**
  * Build word JavaScript from word records
@@ -79,7 +92,7 @@ const parseWords = content => {
  * @param { string } content Word text records
  * @returns { string } Word JavaScript records
  */
-const getWords = content => `Object.freeze([${parseWords(content)}]);`;
+const getWords = content => `Object.freeze(${parseWords(content)});`;
 
 /**
  * Regex to remove ids from english records and extract relevant information

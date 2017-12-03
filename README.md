@@ -25,7 +25,7 @@ Following bundles are available:
 libraries and applications
 
 The package could also be downloaded directly from:
-[https://registry.npmjs.org/sedra-parse/-/sedra-parse-1.0.5.tgz](https://registry.npmjs.org/sedra-parse/-/sedra-parse-1.0.5.tgz)
+[https://registry.npmjs.org/sedra-parse/-/sedra-parse-1.0.6.tgz](https://registry.npmjs.org/sedra-parse/-/sedra-parse-1.0.6.tgz)
 
 ## More information
 
@@ -76,6 +76,7 @@ npm run build
         * [~rootRegex](#module_sedraParse..rootRegex) : <code>RegExp</code>
         * [~lexemeRegex](#module_sedraParse..lexemeRegex) : <code>RegExp</code>
         * [~wordRegex](#module_sedraParse..wordRegex) : <code>RegExp</code>
+        * [~noYwRegex](#module_sedraParse..noYwRegex) : <code>RegExp</code>
         * [~parseWords](#module_sedraParse..parseWords) ⇒ <code>string</code>
         * [~englishRegex](#module_sedraParse..englishRegex) : <code>RegExp</code>
         * [~etymologyRegex](#module_sedraParse..etymologyRegex) : <code>RegExp</code>
@@ -174,6 +175,12 @@ Regex to remove ids from lexeme records and extract relevant information
 
 ### sedraParse~wordRegex : <code>RegExp</code>
 Regex to remove ids from word records and extract wanted information
+
+**Kind**: inner constant of [<code>sedraParse</code>](#module_sedraParse)  
+<a name="module_sedraParse..noYwRegex"></a>
+
+### sedraParse~noYwRegex : <code>RegExp</code>
+Regex to find vocalized words with i/u vowels without supporting y/w
 
 **Kind**: inner constant of [<code>sedraParse</code>](#module_sedraParse)  
 <a name="module_sedraParse..parseWords"></a>
