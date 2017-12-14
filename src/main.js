@@ -81,9 +81,10 @@ const parseWords = content => {
       )},${toCal(vocalised)},${line})`;
     }
   );
-  return `(function(){var r=[${result}];r.noYw=${JSON.stringify(
-    noYw
-  ).replace(/\\"/g, '')};return r;}())`;
+  return `(function(){var r=[${result}];r.noYw=${JSON.stringify(noYw).replace(
+    /\\"/g,
+    ''
+  )};return r;}())`;
 };
 /**
  * Build word JavaScript from word records
@@ -191,28 +192,47 @@ const buildUbs = match =>
  * @returns { Object } Parsed JavaScript Ubs records
  */
 const parseUbs = content => {
-  const map = Object.create(null);
+  const map = Object.create(null, {
+    books: { value: 0, enumerable: true, writable: true },
+    chapters: { value: 0, enumerable: true, writable: true },
+    verses: { value: 0, enumerable: true, writable: true },
+    words: { value: 0, enumerable: true, writable: true }
+  });
   const lines = content.split(/\r\n/);
   for (let i = 0, len = lines.length - 1; i < len; i++) {
     const parse = buildUbs(ubsRegex.exec(lines[i]));
-    const book =
-      map[parse.book] ||
-      Object.defineProperty(map, parse.book, {
-        value: {},
-        enumerable: true
-      })[parse.book];
-    const chapter =
-      book[parse.chapter] ||
-      Object.defineProperty(book, parse.chapter, {
-        value: {},
-        enumerable: true
-      })[parse.chapter];
-    const verse =
-      chapter[parse.verse] ||
-      Object.defineProperty(chapter, parse.verse, {
-        value: [],
-        enumerable: true
-      })[parse.verse];
+    let book = map[parse.book];
+    if (!book) {
+      book = Object.create(null, {
+        chapters: { value: 0, enumerable: true, writable: true },
+        verses: { value: 0, enumerable: true, writable: true },
+        words: { value: 0, enumerable: true, writable: true }
+      });
+      map[parse.book] = book;
+      map.books += 1;
+    }
+    let chapter = book[parse.chapter];
+    if (!chapter) {
+      chapter = Object.create(null, {
+        verses: { value: 0, enumerable: true, writable: true },
+        words: { value: 0, enumerable: true, writable: true }
+      });
+      book[parse.chapter] = chapter;
+      book.chapters += 1;
+      map.chapters += 1;
+    }
+    let verse = chapter[parse.verse];
+    if (!verse) {
+      verse = [];
+      chapter[parse.verse] = verse;
+      chapter.verses += 1;
+      book.verses += 1;
+      map.verses += 1;
+    }
+
+    map.words += 1;
+    book.words += 1;
+    chapter.words += 1;
     verse[parse.index - 1] = parse.wordId;
   }
   return Object.freeze(map);
