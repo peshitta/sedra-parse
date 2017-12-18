@@ -206,7 +206,15 @@ const parseUbs = content => {
       book = Object.create(null, {
         chapters: { value: 0, enumerable: true, writable: true },
         verses: { value: 0, enumerable: true, writable: true },
-        words: { value: 0, enumerable: true, writable: true }
+        words: { value: 0, enumerable: true, writable: true },
+        rollupBooks: { value: map.books, enumerable: true, writable: true },
+        rollupChapters: {
+          value: map.chapters,
+          enumerable: true,
+          writable: true
+        },
+        rollupVerses: { value: map.verses, enumerable: true, writable: true },
+        rollupWords: { value: map.words, enumerable: true, writable: true }
       });
       map[parse.book] = book;
       map.books += 1;
@@ -215,7 +223,14 @@ const parseUbs = content => {
     if (!chapter) {
       chapter = Object.create(null, {
         verses: { value: 0, enumerable: true, writable: true },
-        words: { value: 0, enumerable: true, writable: true }
+        words: { value: 0, enumerable: true, writable: true },
+        rollupChapters: {
+          value: map.chapters,
+          enumerable: true,
+          writable: true
+        },
+        rollupVerses: { value: map.verses, enumerable: true, writable: true },
+        rollupWords: { value: map.words, enumerable: true, writable: true }
       });
       book[parse.chapter] = chapter;
       book.chapters += 1;

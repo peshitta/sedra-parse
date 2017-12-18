@@ -234,7 +234,7 @@ describe('BFBS/UBS', () => {
         '0:-32617,541601519,33555871,-32752\r\n'
     );
     const expected =
-      '{52:{1:{1:[10762,9144,9568,12523,3245,4227,3245,167],2:[165],verses:2,words:9},chapters:1,verses:2,words:9},54:{16:{15:[null,null,null,null,null,null,null,13487,18101,3230,1428,905,4405,8686,10960,11406,19739,2663,1439],verses:1,words:12},chapters:1,verses:1,words:12},books:2,chapters:2,verses:3,words:21};';
+      '{52:{1:{1:[10762,9144,9568,12523,3245,4227,3245,167],2:[165],verses:2,words:9,rollupChapters:0,rollupVerses:0,rollupWords:0},chapters:1,verses:2,words:9,rollupBooks:0,rollupChapters:0,rollupVerses:0,rollupWords:0},54:{16:{15:[null,null,null,null,null,null,null,13487,18101,3230,1428,905,4405,8686,10960,11406,19739,2663,1439],verses:1,words:12,rollupChapters:1,rollupVerses:2,rollupWords:9},chapters:1,verses:1,words:12,rollupBooks:1,rollupChapters:1,rollupVerses:2,rollupWords:9},books:2,chapters:2,verses:3,words:21};';
     strictEqual(js, expected, 'parsed Ubs');
   });
 });
