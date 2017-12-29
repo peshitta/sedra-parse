@@ -8,7 +8,7 @@ const isDev = process.env.BUILD === 'dev';
 const banner = isProduction
   ? '/**\n' +
     '* @file Parse Sedra 3 text database records and return their JavaScript representation\n' +
-    '* @version 1.1.0\n' +
+    '* @version 1.1.1\n' +
     '* @author Greg Borota\n' +
     '* @copyright (c) 2017 Greg Borota.\n' +
     '* @license MIT\n' +
@@ -50,10 +50,9 @@ const plugins = [buble()];
 const targets = [
   {
     input,
-    output: [{ file: pkg.main, format, name, globals, sourcemap }],
+    output: [{ file: pkg.main, format, name, globals, banner, sourcemap }],
     external,
-    plugins: plugins.slice(0),
-    banner
+    plugins: plugins.slice(0)
   }
 ];
 
@@ -61,10 +60,9 @@ if (isProduction) {
   // ES module (for bundlers) build.
   targets.push({
     input,
-    output: [{ file: pkg.module, format: 'es' }],
+    output: [{ file: pkg.module, format: 'es', banner }],
     external,
-    plugins: plugins.slice(0),
-    banner
+    plugins: plugins.slice(0)
   });
 
   plugins.push(
@@ -81,10 +79,9 @@ if (isProduction) {
   // browser/nodejs-friendly minified UMD build
   targets.push({
     input,
-    output: [{ file: pkg.mainMin, format, name, globals }],
+    output: [{ file: pkg.mainMin, format, name, globals, banner }],
     external,
-    plugins,
-    banner
+    plugins
   });
 } else if (!isDev) {
   targets[0].plugins.push(

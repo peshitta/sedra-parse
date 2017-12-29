@@ -271,7 +271,7 @@ const parseUbs = content => {
 
   return Object.freeze(
     Object.create(null, {
-      ubs: { value: JSON.stringify(map).replace(/"/g, '') },
+      ubs: { value: JSON.stringify(map).replace(/"/g, ''), enumerable: true },
       reference: {
         value: JSON.stringify(reference).replace(/"/g, ''),
         enumerable: true

@@ -1,6 +1,6 @@
 {
   "name": "sedra-parse",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Parse Sedra 3 text database records and build JavaScript representation",
   "main": "build/sedra-parse.js",
   "mainMin": "build/sedra-parse.min.js",
