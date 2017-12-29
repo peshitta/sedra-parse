@@ -49,22 +49,32 @@ const getLexemes = content => {
  */
 const wordRegex = /2:(\d+),(?:1:(\d+)|(NULL)),("[A-Z;/a' -]+"),(".+"),(.+)\r\n/gm;
 /**
- * Regex to find vocalized words with i/u vowels without supporting y/w
+ * Regex to find vocalized words with i vowels without supporting y
  * @const
  * @type { RegExp }
  */
-const noYwRegex = /.*([i]+[^;]+)|([u]+[^O]+)|([i]+[;]+[aoeiu]+)|([u]+[O]+[aoeiu]+).*/;
+const noYRegex = /.*(([^;]+[i]+[^;]+)|([^;]+[i]+[;]+[aoeiu]+)).*/;
+/**
+ * Regex to find vocalized words with u vowels without supporting w
+ * @const
+ * @type { RegExp }
+ */
+const noWRegex = /.*(([^O]+[u]+[^O]+)|([^O]+[u]+[O]+[aoeiu]+)).*/;
 /**
  * Remove id from word file as id will be given by the position in the array.
  * Word file has 432 gaps with largest ones being 45 (see sedrajs unit tests).
  * @const
  * @param { string } content Input word records
- * @returns { string } Parsed word records
+ * @returns { object } hash of parsed word records and no Y/W words
  */
 const parseWords = content => {
   let pid = 0;
-  const noYw = [];
-  const result = content.replace(
+  const parse = Object.create(null, {
+    words: { value: '', enumerable: true, writable: true },
+    noY: { value: '', enumerable: true, writable: true },
+    noW: { value: '', enumerable: true, writable: true }
+  });
+  parse.words = content.replace(
     wordRegex,
     (match, id, lexemeId, noLexemeId, word, vocalised, line) => {
       const cid = parseInt(id, 10);
@@ -73,18 +83,21 @@ const parseWords = content => {
         sb += ',';
         ++pid;
       }
-      if (noYwRegex.test(vocalised)) {
-        noYw.push(toCal(vocalised));
+      if (noYRegex.test(vocalised)) {
+        parse.noY += (parse.noY ? ',' : '') + cid;
+      }
+      if (noWRegex.test(vocalised)) {
+        parse.noW += (parse.noW ? ',' : '') + cid;
       }
       return `${sb}w(${noLexemeId ? 'null' : lexemeId},${toCal(
         word.replace(' "', '"')
       )},${toCal(vocalised)},${line})`;
     }
   );
-  return `(function(){var r=[${result}];r.noYw=${JSON.stringify(noYw).replace(
-    /\\"/g,
-    ''
-  )};return r;}())`;
+  parse.words = `Object.freeze([${parse.words}]);`;
+  parse.noY = `Object.freeze([${parse.noY}]);`;
+  parse.noW = `Object.freeze([${parse.noW}]);`;
+  return parse;
 };
 /**
  * Build word JavaScript from word records
@@ -93,7 +106,7 @@ const parseWords = content => {
  * @param { string } content Word text records
  * @returns { string } Word JavaScript records
  */
-const getWords = content => `Object.freeze(${parseWords(content)});`;
+const getWords = content => parseWords(content);
 
 /**
  * Regex to remove ids from english records and extract relevant information
@@ -128,7 +141,7 @@ const etymologyRegex = /4:(\d+),(?:1:(\d+)|(NULL))(,.+)\r\n/gm;
  * Etymology file has 3 gaps but difference is 1 only (see sedrajs unit tests).
  * @const
  * @param { string } content Input etymology text records
- * @returns { string } Parsed etymology content
+ * @returns { object } Parsed etymology content + reference
  */
 const parseEtymology = content => {
   let pid = 0;
@@ -152,7 +165,7 @@ const parseEtymology = content => {
  * Build etymology JavaScript from etymology records e.g. 4:10,1:75,"eu\310",5
  * @static
  * @param { string } content Etymology text file records
- * @returns { string } Etymology JavaScript records
+ * @returns { object } Etymology JavaScript records + reference
  */
 const getEtymology = content => `Object.freeze([${parseEtymology(content)}]);`;
 
@@ -187,11 +200,13 @@ const buildUbs = match =>
 /**
  * Remove id from Ubs records as it is not being used and it
  * is also messed up - it overflows and becomes negative a number of times.
+ * To get verse only index -> reference, filter out entries with verse as 0.
  * @const
  * @param { string } content Input Ubs text records
- * @returns { Object } Parsed JavaScript Ubs records
+ * @returns { Object } Parsed JavaScript Ubs/reference records
  */
 const parseUbs = content => {
+  const reference = [];
   const map = Object.create(null, {
     books: { value: 0, enumerable: true, writable: true },
     chapters: { value: 0, enumerable: true, writable: true },
@@ -235,6 +250,8 @@ const parseUbs = content => {
       book[parse.chapter] = chapter;
       book.chapters += 1;
       map.chapters += 1;
+
+      reference.push([parse.book, parse.chapter, 0]);
     }
     let verse = chapter[parse.verse];
     if (!verse) {
@@ -243,6 +260,7 @@ const parseUbs = content => {
       chapter.verses += 1;
       book.verses += 1;
       map.verses += 1;
+      reference.push([parse.book, parse.chapter, parse.verse]);
     }
 
     map.words += 1;
@@ -250,15 +268,25 @@ const parseUbs = content => {
     chapter.words += 1;
     verse[parse.index - 1] = parse.wordId;
   }
-  return Object.freeze(map);
+
+  return Object.freeze(
+    Object.create(null, {
+      ubs: { value: JSON.stringify(map).replace(/"/g, '') },
+      reference: {
+        value: JSON.stringify(reference).replace(/"/g, ''),
+        enumerable: true
+      }
+    })
+  );
 };
 /**
- * Build Ubs JavaScript from ubs records e.g. 0:8,520100108,33554599,36
+ * Build Ubs JavaScript from ubs records e.g. 0:8,520100108,33554599,36 and
+ * index to reference map. To get verse only index -> reference, filter out
+ * entries where verse is 0.
  * @static
  * @param { string } content Ubs text database records
- * @returns { string } Ubs JavaScript
+ * @returns { object }  { ubs, reference } JavaScript
  */
-const getUbs = content =>
-  `${JSON.stringify(parseUbs(content)).replace(/"/g, '')};`;
+const getUbs = content => parseUbs(content);
 
 export { getRoots, getLexemes, getWords, getEnglish, getEtymology, getUbs };

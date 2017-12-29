@@ -25,7 +25,7 @@ Following bundles are available:
 libraries and applications
 
 The package could also be downloaded directly from:
-[https://registry.npmjs.org/sedra-parse/-/sedra-parse-1.0.9.tgz](https://registry.npmjs.org/sedra-parse/-/sedra-parse-1.0.9.tgz)
+[https://registry.npmjs.org/sedra-parse/-/sedra-parse-1.1.0.tgz](https://registry.npmjs.org/sedra-parse/-/sedra-parse-1.1.0.tgz)
 
 ## More information
 
@@ -70,17 +70,18 @@ npm run build
         * [.getLexemes(content)](#module_sedraParse.getLexemes) ⇒ <code>string</code>
         * [.getWords(content)](#module_sedraParse.getWords) ⇒ <code>string</code>
         * [.getEnglish(content)](#module_sedraParse.getEnglish) ⇒ <code>string</code>
-        * [.getEtymology(content)](#module_sedraParse.getEtymology) ⇒ <code>string</code>
-        * [.getUbs(content)](#module_sedraParse.getUbs) ⇒ <code>string</code>
+        * [.getEtymology(content)](#module_sedraParse.getEtymology) ⇒ <code>object</code>
+        * [.getUbs(content)](#module_sedraParse.getUbs) ⇒ <code>object</code>
     * _inner_
         * [~rootRegex](#module_sedraParse..rootRegex) : <code>RegExp</code>
         * [~lexemeRegex](#module_sedraParse..lexemeRegex) : <code>RegExp</code>
         * [~wordRegex](#module_sedraParse..wordRegex) : <code>RegExp</code>
-        * [~noYwRegex](#module_sedraParse..noYwRegex) : <code>RegExp</code>
-        * [~parseWords](#module_sedraParse..parseWords) ⇒ <code>string</code>
+        * [~noYRegex](#module_sedraParse..noYRegex) : <code>RegExp</code>
+        * [~noWRegex](#module_sedraParse..noWRegex) : <code>RegExp</code>
+        * [~parseWords](#module_sedraParse..parseWords) ⇒ <code>object</code>
         * [~englishRegex](#module_sedraParse..englishRegex) : <code>RegExp</code>
         * [~etymologyRegex](#module_sedraParse..etymologyRegex) : <code>RegExp</code>
-        * [~parseEtymology](#module_sedraParse..parseEtymology) ⇒ <code>string</code>
+        * [~parseEtymology](#module_sedraParse..parseEtymology) ⇒ <code>object</code>
         * [~ubsRegex](#module_sedraParse..ubsRegex) : <code>RegExp</code>
         * [~buildUbs](#module_sedraParse..buildUbs) ⇒ <code>Object</code>
         * [~parseUbs](#module_sedraParse..parseUbs) ⇒ <code>Object</code>
@@ -137,11 +138,11 @@ e.g. 3:165,1:97,"cause","without","","",0,0
 
 <a name="module_sedraParse.getEtymology"></a>
 
-### sedraParse.getEtymology(content) ⇒ <code>string</code>
+### sedraParse.getEtymology(content) ⇒ <code>object</code>
 Build etymology JavaScript from etymology records e.g. 4:10,1:75,"eu\310",5
 
 **Kind**: static method of [<code>sedraParse</code>](#module_sedraParse)  
-**Returns**: <code>string</code> - Etymology JavaScript records  
+**Returns**: <code>object</code> - Etymology JavaScript records + reference  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -149,11 +150,13 @@ Build etymology JavaScript from etymology records e.g. 4:10,1:75,"eu\310",5
 
 <a name="module_sedraParse.getUbs"></a>
 
-### sedraParse.getUbs(content) ⇒ <code>string</code>
-Build Ubs JavaScript from ubs records e.g. 0:8,520100108,33554599,36
+### sedraParse.getUbs(content) ⇒ <code>object</code>
+Build Ubs JavaScript from ubs records e.g. 0:8,520100108,33554599,36 and
+index to reference map. To get verse only index -> reference, filter out
+entries where verse is 0.
 
 **Kind**: static method of [<code>sedraParse</code>](#module_sedraParse)  
-**Returns**: <code>string</code> - Ubs JavaScript  
+**Returns**: <code>object</code> - { ubs, reference } JavaScript  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -177,20 +180,26 @@ Regex to remove ids from lexeme records and extract relevant information
 Regex to remove ids from word records and extract wanted information
 
 **Kind**: inner constant of [<code>sedraParse</code>](#module_sedraParse)  
-<a name="module_sedraParse..noYwRegex"></a>
+<a name="module_sedraParse..noYRegex"></a>
 
-### sedraParse~noYwRegex : <code>RegExp</code>
-Regex to find vocalized words with i/u vowels without supporting y/w
+### sedraParse~noYRegex : <code>RegExp</code>
+Regex to find vocalized words with i vowels without supporting y
+
+**Kind**: inner constant of [<code>sedraParse</code>](#module_sedraParse)  
+<a name="module_sedraParse..noWRegex"></a>
+
+### sedraParse~noWRegex : <code>RegExp</code>
+Regex to find vocalized words with u vowels without supporting w
 
 **Kind**: inner constant of [<code>sedraParse</code>](#module_sedraParse)  
 <a name="module_sedraParse..parseWords"></a>
 
-### sedraParse~parseWords ⇒ <code>string</code>
+### sedraParse~parseWords ⇒ <code>object</code>
 Remove id from word file as id will be given by the position in the array.
 Word file has 432 gaps with largest ones being 45 (see sedrajs unit tests).
 
 **Kind**: inner constant of [<code>sedraParse</code>](#module_sedraParse)  
-**Returns**: <code>string</code> - Parsed word records  
+**Returns**: <code>object</code> - hash of parsed word records and no Y/W words  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -211,12 +220,12 @@ Regex to remove ids from etymology records and extract useful info only
 **Kind**: inner constant of [<code>sedraParse</code>](#module_sedraParse)  
 <a name="module_sedraParse..parseEtymology"></a>
 
-### sedraParse~parseEtymology ⇒ <code>string</code>
+### sedraParse~parseEtymology ⇒ <code>object</code>
 Remove id from etymology records as id will be given by the array position.
 Etymology file has 3 gaps but difference is 1 only (see sedrajs unit tests).
 
 **Kind**: inner constant of [<code>sedraParse</code>](#module_sedraParse)  
-**Returns**: <code>string</code> - Parsed etymology content  
+**Returns**: <code>object</code> - Parsed etymology content + reference  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -251,9 +260,10 @@ Build parsed Usb object from the ubsRegex match
 ### sedraParse~parseUbs ⇒ <code>Object</code>
 Remove id from Ubs records as it is not being used and it
 is also messed up - it overflows and becomes negative a number of times.
+To get verse only index -> reference, filter out entries with verse as 0.
 
 **Kind**: inner constant of [<code>sedraParse</code>](#module_sedraParse)  
-**Returns**: <code>Object</code> - Parsed JavaScript Ubs records  
+**Returns**: <code>Object</code> - Parsed JavaScript Ubs/reference records  
 
 | Param | Type | Description |
 | --- | --- | --- |

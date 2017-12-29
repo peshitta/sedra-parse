@@ -84,10 +84,12 @@ describe('Word', () => {
         '2:15,1:4,"ABA","AeB\'oA",6881280,320\r\n' +
         '2:20,1:5,"ABD","AoB,eD,",109772800,128\r\n' +
         '2:21,1:1742,"MYL","MeYuL",0,192\r\n' +
-        '2:22,1:2854,"DXSR;A-DI;L;IOS","D\'XeSaRi;aA-D,I,i;Li;I\'oOS",1024,128\r\n'
+        '2:22,1:1518,"CL","C\'uL",0,0\r\n' +
+        '2:23,1:3541,"RWNA","RiWoNoA",6881280,192\r\n' +
+        '2:24,1:2854,"DXSR;A-DI;L;IOS","D\'XeSaRi;aA-D,I,i;Li;I\'oOS",1024,128\r\n'
     );
     const expected =
-      'Object.freeze((function(){var r=[,' +
+      'Object.freeze([,' +
       'w(2,"l)bwh","la)b,wuh",6883480,128),' +
       'w(2,"l)bwhy","la)b,wuh_y",6883476,128),' +
       'w(2,"l)bwhyn","la)b,wuhyen",6883544,128),' +
@@ -104,9 +106,12 @@ describe('Word', () => {
       ',,,,' +
       'w(5,")bd",")ob,ed,",109772800,128),' +
       'w(1742,"mTl","meTul",0,192),' +
-      'w(2854,"dqsry)-dpylypws","d\'qesariya)-d,p,yilyip\'wOs",1024,128)];' +
-      'r.noYw=["meTul","d\'qesariya)-d,p,yilyip\'wOs"];return r;}()));';
-    strictEqual(js, expected, 'parsed words');
+      'w(1518,"kl","k\'ul",0,0),' +
+      'w(3541,"r$n)","ri$ono)",6881280,192),' +
+      'w(2854,"dqsry)-dpylypws","d\'qesariya)-d,p,yilyip\'wOs",1024,128)]);';
+    strictEqual(js.words, expected, 'parsed words');
+    strictEqual(js.noY, 'Object.freeze([23,24]);', 'noY words');
+    strictEqual(js.noW, 'Object.freeze([21,22]);', 'noW words');
   });
 });
 
@@ -233,8 +238,11 @@ describe('BFBS/UBS', () => {
         '0:-32618,541601518,33557095,0\r\n' +
         '0:-32617,541601519,33555871,-32752\r\n'
     );
-    const expected =
-      '{52:{1:{1:[10762,9144,9568,12523,3245,4227,3245,167],2:[165],verses:2,words:9,rollupChapters:0,rollupVerses:0,rollupWords:0},chapters:1,verses:2,words:9,rollupBooks:0,rollupChapters:0,rollupVerses:0,rollupWords:0},54:{16:{15:[null,null,null,null,null,null,null,13487,18101,3230,1428,905,4405,8686,10960,11406,19739,2663,1439],verses:1,words:12,rollupChapters:1,rollupVerses:2,rollupWords:9},chapters:1,verses:1,words:12,rollupBooks:1,rollupChapters:1,rollupVerses:2,rollupWords:9},books:2,chapters:2,verses:3,words:21};';
-    strictEqual(js, expected, 'parsed Ubs');
+    let expected =
+      '{52:{1:{1:[10762,9144,9568,12523,3245,4227,3245,167],2:[165],verses:2,words:9,rollupChapters:0,rollupVerses:0,rollupWords:0},chapters:1,verses:2,words:9,rollupBooks:0,rollupChapters:0,rollupVerses:0,rollupWords:0},54:{16:{15:[null,null,null,null,null,null,null,13487,18101,3230,1428,905,4405,8686,10960,11406,19739,2663,1439],verses:1,words:12,rollupChapters:1,rollupVerses:2,rollupWords:9},chapters:1,verses:1,words:12,rollupBooks:1,rollupChapters:1,rollupVerses:2,rollupWords:9},books:2,chapters:2,verses:3,words:21}';
+    strictEqual(js.ubs, expected, 'parsed Ubs');
+
+    expected = '[[52,1,0],[52,1,1],[52,1,2],[54,16,0],[54,16,15]]';
+    strictEqual(js.reference, expected, 'parsed Reference');
   });
 });

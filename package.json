@@ -1,6 +1,6 @@
 {
   "name": "sedra-parse",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "description": "Parse Sedra 3 text database records and build JavaScript representation",
   "main": "build/sedra-parse.js",
   "mainMin": "build/sedra-parse.min.js",
@@ -70,8 +70,8 @@
     "eslint-plugin-import": "^2.8.0",
     "istanbul": "^0.4.5",
     "jsdoc-to-markdown": "^3.0.3",
-    "mocha": "^4.0.1",
-    "rollup": "^0.53.0",
+    "mocha": "^4.1.0",
+    "rollup": "^0.53.1",
     "rollup-plugin-buble": "^0.18.0",
     "rollup-plugin-istanbul": "^2.0.0",
     "rollup-plugin-uglify": "^2.0.1"
