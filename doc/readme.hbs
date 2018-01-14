@@ -25,7 +25,7 @@ Following bundles are available:
 libraries and applications
 
 The package could also be downloaded directly from:
-[https://registry.npmjs.org/sedra-parse/-/sedra-parse-1.1.3.tgz](https://registry.npmjs.org/sedra-parse/-/sedra-parse-1.1.3.tgz)
+[https://registry.npmjs.org/sedra-parse/-/sedra-parse-1.1.4.tgz](https://registry.npmjs.org/sedra-parse/-/sedra-parse-1.1.4.tgz)
 
 ## More information
 

@@ -134,27 +134,27 @@ describe('English', () => {
         '3:28,1:16,"sadness","","","",0,0\r\n' +
         '3:29,1:17,"stone","","","",0,0\r\n' +
         '3:30,1:18,"Abraham","","","",0,0\r\n' +
-        '3:31,NULL,"Abram","","","",0,0\r\n'
+        '3:31,NULL,"Abram","","","",0,1\r\n'
     );
     const expected =
       'Object.freeze([,' +
-      'e(null,"perishing","","","",0,0),' +
-      'e(8,"pipe","","","",0,0),' +
-      'e(8,"flute","","","",0,0),' +
-      'e(9,"Abijah","","","(son of Rehoboam)",2,0),' +
-      'e(10,"Abijah","","","(founder of a course of priests)",2,0),' +
-      'e(11,"Abiud","","","",0,0),' +
-      'e(12,"Abilene","","","",0,0),' +
-      'e(13,"Abiathar","","","",0,0),' +
-      'e(14,"mourner","","","",0,0),' +
-      'e(15,"grieve","","","",4096,0),' +
-      'e(15,"mourn","","","",4096,0),' +
-      'e(16,"mourning","","","",0,0),' +
-      'e(16,"grief","","","",0,0),' +
-      'e(16,"sadness","","","",0,0),' +
-      'e(17,"stone","","","",0,0),' +
-      'e(18,"Abraham","","","",0,0),' +
-      'e(null,"Abram","","","",0,0)]);';
+      'e(null,"perishing","","","",0,false),' +
+      'e(8,"pipe","","","",0,false),' +
+      'e(8,"flute","","","",0,false),' +
+      'e(9,"Abijah","","","(son of Rehoboam)",2,false),' +
+      'e(10,"Abijah","","","(founder of a course of priests)",2,false),' +
+      'e(11,"Abiud","","","",0,false),' +
+      'e(12,"Abilene","","","",0,false),' +
+      'e(13,"Abiathar","","","",0,false),' +
+      'e(14,"mourner","","","",0,false),' +
+      'e(15,"grieve","","","",4096,false),' +
+      'e(15,"mourn","","","",4096,false),' +
+      'e(16,"mourning","","","",0,false),' +
+      'e(16,"grief","","","",0,false),' +
+      'e(16,"sadness","","","",0,false),' +
+      'e(17,"stone","","","",0,false),' +
+      'e(18,"Abraham","","","",0,false),' +
+      'e(null,"Abram","","","",0,true)]);';
     strictEqual(js, expected, 'parsed english');
   });
 });

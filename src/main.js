@@ -114,7 +114,7 @@ const getWords = content => parseWords(content);
  * @const
  * @type { RegExp }
  */
-const englishRegex = /3:\d+,(?:1:(\d+)|(NULL))(,.+)\r\n/gm;
+const englishRegex = /3:\d+,(?:1:(\d+)|(NULL))(,.+,)([01])\r\n/gm;
 /**
  * Build english javascript from english records
  * e.g. 3:165,1:97,"cause","without","","",0,0
@@ -125,7 +125,8 @@ const englishRegex = /3:\d+,(?:1:(\d+)|(NULL))(,.+)\r\n/gm;
 const getEnglish = content => {
   const lines = content.replace(
     englishRegex,
-    (match, id, noId, line) => `,e(${noId ? 'null' : id}${line})`
+    (match, id, noId, line, flag) =>
+      `,e(${noId ? 'null' : id}${line}${flag === '1' ? 'true' : 'false'})`
   );
   return `Object.freeze([${lines}]);`;
 };
