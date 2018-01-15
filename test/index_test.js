@@ -154,7 +154,7 @@ describe('English', () => {
       'e(16,"sadness","","","",0,false),' +
       'e(17,"stone","","","",0,false),' +
       'e(18,"Abraham","","","",0,false),' +
-      'e(null,"Abram","","","",0,true)]);';
+      'e(18,"Abram","","","",0,true)]);';
     strictEqual(js, expected, 'parsed english');
   });
 });

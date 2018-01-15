@@ -108,13 +108,94 @@ const parseWords = content => {
  */
 const getWords = content => parseWords(content);
 
+const englishComments = {
+  ',"w/ &YuORoA&"': ',"w/ &Twuro)&"',
+  ',"w/ &Ya;BuOT,oA&"': ',"w/ &Taybwut,o)&"',
+  ',"w/ &XuOM&"': ',"w/ &qwum&"',
+  ',"w/ &XoLoA&"': ',"w/ &qolo)&"',
+  ',"w/ &XaR/oA&"': ',"w/ &qarco)&"',
+  ',"w/ &XD,oM&"': ',"w/ &qd,om&"',
+  ',"w/ &WaAeL&"': ',"w/ &$a)el&"',
+  ',"w/ &WLoMoA&"': ',"w/ &$lomo)&"',
+  ',"w/ &T\'LoT,&"': ',"w/ &T\'LoT,&"',
+  ',"w/ &RuOKoA&"': ',"w/ &rwuxo)&"',
+  ',"w/ &NuORoA&"': ',"w/ &nwuro)&"',
+  ',"w/ &NoSeB&"': ',"w/ &noseb&"',
+  ',"w/ &MeN&"': ',"w/ &men&"',
+  ',"w/ &LoA&"': ',"w/ &lo)&"',
+  ',"w/ &LKeM&"': ',"w/ &lxem&"',
+  ',"w/ &L&"': ',"w/ &l&"',
+  ',"w/ &KaSi;R&"': ',"w/ &xasyir&"',
+  ',"w/ &EaL&"': ',"w/ &(al&"',
+  ',"w/ &Ea;NoA&"': ',"w/ &(ayno)&"',
+  ',"w/ &EBaD&"': ',"w/ &(bad&"',
+  ',"w/ &D\'LoA&"': ',"w/ &d\'lo)&"',
+  ',"w/ &D\'B,a;T\'oA&"': ',"w/ &d\'b,ayt\'o)&"',
+  ',"w/ &D\'&"': ',"w/ &d\'&"',
+  ',"w/ &Be;T,&"': ',"w/ &byet,&"',
+  ',"w/ &B\'e;T,&"': ',"w/ &b\'yet,&"',
+  ',"w/ &B\'RuOK&"': ',"w/ &b\'rwux&"',
+  ',"w/ &B\'LeB,oA&"': ',"w/ &b\'leb,o)&"',
+  ',"w/ &B\'G,eN&"': ',"w/ &b\'g,en&"',
+  ',"w/ &B\'+&"': ',"w/ &b\'+&"',
+  ',"w/ &B\'&"': ',"w/ &b\'&"',
+  ',"w/ &AaIe+*A&"': ',"w/ &)ape+*)&"',
+  ',"w/ &AaI\'e+*A&"': ',"w/ &)ap\'e+*)&"',
+  ',"w/ &AKD&"': ',"w/ &)xd&"',
+  ',"w/ &;aMoA&"': ',"w/ &yamo)&"',
+  ',"constr. w/ &YaENoA&"': ',"constr. w/ &Ta(no)&"',
+  ',"constr. w/ &XoLoA&"': ',"constr. w/ &qolo)&"',
+  ',"constr. w/ &WaB,*YeA&"': ',"constr. w/ &$ab,*Te)&"',
+  ',"constr. w/ &RuOKoA&"': ',"constr. w/ &rwuxo)&"',
+  ',"constr. w/ &Mi;*T,eA&"': ',"constr. w/ &myi*t,e)&"',
+  ',"constr. w/ &IuOMoA&"': ',"constr. w/ &pwumo)&"',
+  ',"constr. w/ &C\'oHNuOT,oA&"': ',"constr. w/ &k\'ohnwut,o)&"',
+  ',"constr. w/ &B\'eSRoA&"': ',"constr. w/ &b\'esro)&"',
+  ',"constr. w/ &Ai;Da;*oA&"': ',"constr. w/ &)yiday*o)&"',
+  ',"constr. w/ &Ai;D,oA&"': ',"constr. w/ &)yid,o)&"',
+  ',"constr. w/ &AaIe+*A&"': ',"constr. w/ &)ape+*)&"',
+  ',"constr. w/ &;iD,aET\'oA&"': ',"constr. w/ &yid,a(t\'o)&"',
+  ',"always w/ &AeC,aL&"': ',"always w/ &)ek,al&"',
+  ',"abs. w/ &MeN&"': ',"abs. w/ &men&"',
+  ',"= &MoNoA& + &H_uO&"': ',"= &mono)& + &h_wu&"',
+  ',"= &MeN& + &C\'oA&, of time:"': ',"= &men& + &k\'o)&, of time:"',
+  ',"= &MaN& + &H_uO&"': ',"= &man& + &h_wu&"',
+  ',"= &LoA& + &HuO&"': ',"= &lo)& + &hwu&"',
+  ',"= &HuO& + &HuO&"': ',"= &hwu& + &hwu&"',
+  ',"= &HoNoA& + &HuO&"': ',"= &hono)& + &hwu&"',
+  ',"= &C\'uL& + &A_NoW&"': ',"= &k\'ul& + &)_no$&"',
+  ',"= &C\'aD,& + &HuO&"': ',"= &k\'ad,& + &hwu&"',
+  ',"= &B\'aR& + &A_NoWoA&"': ',"= &b\'ar& + &)_no$o)&"',
+  ',"= &AoI,& + &LoA&"': ',"= &)op,& + &lo)&"',
+  ',"= &AoI,& + &LaN&"': ',"= &)op,& + &lan&"',
+  ',"= &Aa;C\'oA& + &H_uO&"': ',"= &)ayk\'o)& + &h_wu&"',
+  ',"(w/*L*)"': ',"(w/*l*)"',
+  ',"(w/*DLA*)"': ',"(w/*dl)*)"',
+  ',"(w/*D*)"': ',"(w/*d*)"',
+  ',"(w/*A;DA*)"': ',"(w/*)yd)*)"',
+  ',"(w/*;XDA*)"': ',"(w/*yqd)*)"',
+  ',"(w/ *RB*)"': ',"(w/ *rb*)"',
+  ',"(w/ *M/A*)"': ',"(w/ *mc)*)"',
+  ',"(w/ *D*)"': ',"(w/ *d*)"',
+  ',"(w/ *AIA*)"': ',"(w/ *)p)*)"',
+  ',"(*CL-KD___KD*)"': ',"(*kl-xd___xd*)"',
+  ',"(*A;T D__OA;T*)"': ',"(*)yt d__w)yt*)"',
+  ',"&YoB,& as adv."': ',"&Tob,& as adv."',
+  ',"&WoX*La; WaB,*YeA&"': ',"&$oq*lay $ab,*Te)&"',
+  ",\"&T'iT'oA I,aC'i;HT'oA&\"": ",\"&t'it'o) p,ak'yiht'o)&\"",
+  ',"&MoR;oA /B,aAOuT,&"': ',"&moryo) cb,a)wut,&"',
+  ',"&MeC\'oA OMeC\'oA&"': ',"&mek\'o) wmek\'o)&"',
+  ',"&KaD, KaD,&"': ',"&xad, xad,&"',
+  ',"&DMeN ;uOLI,oNeH DeAI;XoORoS&"': ',"&dmen ywulp,oneh de)pyqwOros&"'
+};
+
 /**
  * Regex to remove ids from english records and extract relevant information
  * only
  * @const
  * @type { RegExp }
  */
-const englishRegex = /3:\d+,(?:1:(\d+)|(NULL))(,.+,)([01])\r\n/gm;
+const englishRegex = /3:\d+,(?:1:(\d+)|(NULL))(,".*")(,".*")(,".*")(,".*")(,\d+,)([01])\r\n/gm;
 /**
  * Build english javascript from english records
  * e.g. 3:165,1:97,"cause","without","","",0,0
@@ -123,10 +204,17 @@ const englishRegex = /3:\d+,(?:1:(\d+)|(NULL))(,.+,)([01])\r\n/gm;
  * @returns { string } English JavaScript content
  */
 const getEnglish = content => {
+  let curId = null;
   const lines = content.replace(
     englishRegex,
-    (match, id, noId, line, flag) =>
-      `,e(${noId ? 'null' : id}${line}${flag === '1' ? 'true' : 'false'})`
+    (match, id, noId, word, before, after, comment, attrib, flag) => {
+      curId = noId ? curId : id;
+      const com =
+        comment === ',""' ? comment : englishComments[comment] || comment;
+      return `,e(${curId}${word}${before}${after}${com}${attrib}${
+        flag === '1' ? 'true' : 'false'
+      })`;
+    }
   );
   return `Object.freeze([${lines}]);`;
 };
