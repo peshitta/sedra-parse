@@ -134,7 +134,7 @@ describe('English', () => {
         '3:28,1:16,"sadness","","","",0,0\r\n' +
         '3:29,1:17,"stone","","","",0,0\r\n' +
         '3:30,1:18,"Abraham","","","",0,0\r\n' +
-        '3:31,NULL,"Abram","","","",0,1\r\n'
+        '3:31,NULL,"Abram","","","",-234,1\r\n'
     );
     const expected =
       'Object.freeze([,' +
@@ -154,7 +154,7 @@ describe('English', () => {
       'e(16,"sadness","","","",0,false),' +
       'e(17,"stone","","","",0,false),' +
       'e(18,"Abraham","","","",0,false),' +
-      'e(18,"Abram","","","",0,true)]);';
+      'e(18,"Abram","","","",-234,true)]);';
     strictEqual(js, expected, 'parsed english');
   });
 });

@@ -195,7 +195,7 @@ const englishComments = {
  * @const
  * @type { RegExp }
  */
-const englishRegex = /3:\d+,(?:1:(\d+)|(NULL))(,".*")(,".*")(,".*")(,".*")(,\d+,)([01])\r\n/gm;
+const englishRegex = /3:\d+,(?:1:(\d+)|(NULL))(,".*")(,".*")(,".*")(,".*")(,-?\d+,)([01])\r\n/gm;
 /**
  * Build english javascript from english records
  * e.g. 3:165,1:97,"cause","without","","",0,0
