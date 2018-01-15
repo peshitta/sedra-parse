@@ -134,7 +134,13 @@ describe('English', () => {
         '3:28,1:16,"sadness","","","",0,0\r\n' +
         '3:29,1:17,"stone","","","",0,0\r\n' +
         '3:30,1:18,"Abraham","","","",0,0\r\n' +
-        '3:31,NULL,"Abram","","","",-234,1\r\n'
+        '3:31,NULL,"Abram","","","",-234,1\r\n' +
+        '3:124,1:71,"kindle","","","w/ &NuORoA& ",10240,0\r\n' +
+        '3:131,1:74,"near","","","w/ &EaL&",0,0\r\n' +
+        '3:1895,1:1088,"Taverns","The Three","","w/ &T\'LoT,&",0,0\r\n' +
+        '3:2717,1:1522,"each one","","","",0,0\r\n' +
+        '3:2718,NULL,"each and every one","","","(*CL-KD___KD*) ",0,0\r\n' +
+        '3:4733,1:2716,"break","","out against","w/ &EaL& ",8208,0\r\n'
     );
     const expected =
       'Object.freeze([,' +
@@ -154,7 +160,13 @@ describe('English', () => {
       'e(16,"sadness","","","",0,false),' +
       'e(17,"stone","","","",0,false),' +
       'e(18,"Abraham","","","",0,false),' +
-      'e(18,"Abram","","","",-234,true)]);';
+      'e(18,"Abram","","","",-234,true),' +
+      'e(71,"kindle","","","w/ &nwuro)&",10240,false),' +
+      'e(74,"near","","","w/ &(al&",0,false),' +
+      'e(1088,"Taverns","The Three","","w/ &t\'lot,&",0,false),' +
+      'e(1522,"each one","","","",0,false),' +
+      'e(1522,"each and every one","","","(*kl-xd___xd*)",0,false),' +
+      'e(2716,"break","","out against","w/ &(al&",8208,false)]);';
     strictEqual(js, expected, 'parsed english');
   });
 });
