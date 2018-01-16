@@ -117,8 +117,9 @@ describe('Word', () => {
 
 describe('English', () => {
   it('Parse English File', () => {
-    const js = getEnglish(
-      '3:15,NULL,"perishing","","","",0,0\r\n' +
+    const parse = getEnglish(
+      '3:14,1:7,"lost","","","",0,0\r\n' +
+        '3:15,NULL,"perishing","","","",0,0\r\n' +
         '3:16,1:8,"pipe","","","",0,0\r\n' +
         '3:17,1:8,"flute","","","",0,0\r\n' +
         '3:18,1:9,"Abijah","","","(son of Rehoboam)",2,0\r\n' +
@@ -144,7 +145,8 @@ describe('English', () => {
     );
     const expected =
       'Object.freeze([,' +
-      'e(null,"perishing","","","",0,false),' +
+      'e(7,"lost","","","",0,false),' +
+      'e(7,"perishing","","","",0,false),' +
       'e(8,"pipe","","","",0,false),' +
       'e(8,"flute","","","",0,false),' +
       'e(9,"Abijah","","","(son of Rehoboam)",2,false),' +
@@ -167,13 +169,16 @@ describe('English', () => {
       'e(1522,"each one","","","",0,false),' +
       'e(1522,"each and every one","","","(*kl-xd___xd*)",0,false),' +
       'e(2716,"break","","out against","w/ &(al&",8208,false)]);';
-    strictEqual(js, expected, 'parsed english');
+    strictEqual(parse.english, expected, 'parsed english');
+    const lids =
+      'Object.freeze({7:[14,15],8:[16,17],9:[18],10:[19],11:[20],12:[21],13:[22],14:[23],15:[24,25],16:[26,27,28],17:[29],18:[30,31],71:[124],74:[131],1088:[1895],1522:[2717,2718],2716:[4733]});';
+    strictEqual(parse.lids, lids, 'lids');
   });
 });
 
 describe('Etymology', () => {
   it('Parse Etymology File', () => {
-    const js = getEtymology(
+    const parse = getEtymology(
       '4:1,1:1,"a\\255h\\256r",5\r\n' +
         '4:2,1:20,"a\\255gc\\256n",5\r\n' +
         '4:3,1:22,"a\\255gro\\256w",5\r\n' +
@@ -221,7 +226,10 @@ describe('Etymology', () => {
       't(null,"409.000000",8),' +
       't(859,"zeu\\\\264gos",5)' +
       ']);';
-    strictEqual(js, expected, 'parsed etymology');
+    strictEqual(parse.etymology, expected, 'parsed etymology');
+    const lids =
+      'Object.freeze({1:1,20:2,22:3,36:4,46:5,50:6,53:7,57:8,61:9,75:10,77:11,97:13,106:14,119:15,122:16,161:17,191:19,198:20,859:22,1797:12});';
+    strictEqual(parse.lids, lids, 'lids');
   });
 });
 

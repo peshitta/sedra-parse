@@ -106,7 +106,7 @@ const parseWords = content => {
  * @param { string } content Word text records
  * @returns { string } Word JavaScript records
  */
-const getWords = content => parseWords(content);
+const getWords = content => Object.freeze(parseWords(content));
 
 const englishComments = {
   ',"w/ &YuORoA&"': ',"w/ &Twuro)&"',
@@ -196,7 +196,7 @@ const englishComments = {
  * @const
  * @type { RegExp }
  */
-const englishRegex = /3:\d+,(?:1:(\d+)|(NULL))(,".*")(,".*")(,".*")(,".*")(,-?\d+,)([01])\r\n/gm;
+const englishRegex = /3:(\d+),(?:1:(\d+)|(NULL))(,".*")(,".*")(,".*")(,".*")(,-?\d+,)([01])\r\n/gm;
 /**
  * Build english javascript from english records
  * e.g. 3:165,1:97,"cause","without","","",0,0
@@ -206,10 +206,19 @@ const englishRegex = /3:\d+,(?:1:(\d+)|(NULL))(,".*")(,".*")(,".*")(,".*")(,-?\d
  */
 const getEnglish = content => {
   let curId = null;
+  const parse = Object.create(null, {
+    english: { value: '', enumerable: true, writable: true },
+    lids: { value: '', enumerable: true, writable: true }
+  });
+  const lids = {};
   const lines = content.replace(
     englishRegex,
-    (match, id, noId, word, before, after, comment, attrib, flag) => {
-      curId = noId ? curId : id;
+    (match, id, lid, noLid, word, before, after, comment, attrib, flag) => {
+      curId = noLid ? curId : lid;
+      if (!lids[curId]) {
+        lids[curId] = [];
+      }
+      lids[curId].push(id);
       const com =
         comment === ',""' ? comment : englishComments[comment] || comment;
       return `,e(${curId}${word}${before}${after}${com}${attrib}${
@@ -217,7 +226,9 @@ const getEnglish = content => {
       })`;
     }
   );
-  return `Object.freeze([${lines}]);`;
+  parse.english = `Object.freeze([${lines}]);`;
+  parse.lids = `Object.freeze(${JSON.stringify(lids).replace(/"/g, '')});`;
+  return Object.freeze(parse);
 };
 
 /**
@@ -235,9 +246,17 @@ const etymologyRegex = /4:(\d+),(?:1:(\d+)|(NULL))(,.+)\r\n/gm;
  */
 const parseEtymology = content => {
   let pid = 0;
-  return content.replace(
+  const parse = Object.create(null, {
+    etymology: { value: '', enumerable: true, writable: true },
+    lids: { value: '', enumerable: true, writable: true }
+  });
+  const lids = {};
+  const lines = content.replace(
     etymologyRegex,
     (match, id, lexemeId, noLexemeId, line) => {
+      if (lexemeId) {
+        lids[lexemeId] = id;
+      }
       let sb = `,t(${noLexemeId ? 'null' : lexemeId}${line.replace(
         /\\/g,
         '\\\\'
@@ -250,6 +269,9 @@ const parseEtymology = content => {
       return sb;
     }
   );
+  parse.etymology = `Object.freeze([${lines}]);`;
+  parse.lids = `Object.freeze(${JSON.stringify(lids).replace(/"/g, '')});`;
+  return parse;
 };
 /**
  * Build etymology JavaScript from etymology records e.g. 4:10,1:75,"eu\310",5
@@ -257,7 +279,7 @@ const parseEtymology = content => {
  * @param { string } content Etymology text file records
  * @returns { object } Etymology JavaScript records + reference
  */
-const getEtymology = content => `Object.freeze([${parseEtymology(content)}]);`;
+const getEtymology = content => Object.freeze(parseEtymology(content));
 
 /**
  * Regex to remove ids from Ubs records and extract parsed information
